@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacts List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Contacts List</h1>
+    <ul id="contacts"></ul>
+    <input type="text" id="nameInput" placeholder="Enter Name">
+    <button id="addContactButton">Add</button>
+    <button id="removeContactButton" disabled>Remove</button>
+  </div>
+  <form action="index.html" method="get">
+    <button type="submit">go back</button>
+  </form>
+
+  <script>
+    const contactsList = document.getElementById("contacts");
+    const nameInput = document.getElementById("nameInput");
+    const addContactButton = document.getElementById("addContactButton");
+    const removeContactButton = document.getElementById("removeContactButton");
+
+    let contacts = []; 
+
+    function updateList() {
+      contactsList.innerHTML = contacts.map(contact => `<li>${contact}</li>`).join("");
+    }
+
+    
+    function addContact() {
+      const name = nameInput.value.trim();
+      if (name) {
+        if (contacts.length < 7) {
+          contacts.push(name);
+        } else {
+          contacts.shift(); 
+          contacts.push(name);
+        }
+        nameInput.value = ""; 
+        updateList();
+        updateRemoveButtonState(); 
+      }
+    }
+
+    
+    function removeContact() {
+      if (contacts.length > 0) 
+      {
+        contacts.pop(); 
+        updateList();
+        updateRemoveButtonState();
+      } 
+    }
+
+   
+    function updateRemoveButtonState() {
+      removeContactButton.disabled = contacts.length === 0;
+    }
+
+   
+    addContactButton.onclick = addContact;
+    removeContactButton.onclick = removeContact;
+  </script>
+</body>
+
+</html>
